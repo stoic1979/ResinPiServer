@@ -1,9 +1,10 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import datetime
 from flask import Flask
 app = Flask(__name__)
 
 
+GPIO.setmode(GPIO.BOARD)
 LOG_FILE = "logs.txt"
 
 
@@ -11,7 +12,7 @@ def write_log(msg):
 	# writing msg to log file
 	file = open(LOG_FILE, 'a')
 	now = datetime.datetime.now()
-	file.write('%s %s\n' % (msg, now))
+	file.write('[%s] :: %s\n' % (now, msg))
 	file.close()
 
 
@@ -22,9 +23,9 @@ def get_logs():
 	
 
 @app.route('/')
-def hello_world():
-	write_log("Hello world\n")
-	return 'Hello World!'
+def home():
+	write_log("home page\n")
+	return 'Home Page'
 
 
 @app.route('/logs')
@@ -32,6 +33,20 @@ def logs():
 	return get_logs()
 
 
+@app.route('/gpio')
+def resin_gpio():
+	# GPIO pins list based on GPIO.BOARD
+	gpioList = [18]
+	GPIO.setup(gpioList, GPIO.OUT)
+	
+	write_log("GPIO :: PIN 18 -> ON")
+	GPIO.output(gpioList, 1)
+
+	time.sleep(2)
+
+	write_log("GPIO :: PIN 18 -> OFF")
+	GPIO.output(gpioList, 0)	
+
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
-    # app.run(debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
