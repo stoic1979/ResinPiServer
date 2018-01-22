@@ -19,9 +19,12 @@ def write_log(msg):
 
 def get_logs():
 	# reading log file and returning all logs
-	file = open(LOG_FILE, 'r')
-	return file.read()
-	
+	try:
+		file = open(LOG_FILE, 'r')
+		return file.read()
+	except:
+		return "no logs found"
+
 
 @app.route('/')
 def home():
