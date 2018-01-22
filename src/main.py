@@ -14,7 +14,7 @@ def write_log(msg):
 	# writing msg to log file
 	file = open(LOG_FILE, 'a')
 	now = datetime.datetime.now()
-	file.write('[%s] :: %s\n' % (now, msg))
+	file.write('[%s] :: %s\n<br>' % (now, msg))
 	file.close()
 
 
@@ -43,13 +43,13 @@ def resin_gpio(pin):
 	try:
 		# GPIO pins list based on GPIO.BOARD
 		GPIO.setwarnings(False)
-		GPIO.setup(18, GPIO.OUT)
+		GPIO.setup(pin, GPIO.OUT)
 		print "LED on"
 
-		GPIO.output(18, GPIO.HIGH)
+		GPIO.output(pin, GPIO.HIGH)
 		time.sleep(1)
 		print "LED off"
-		GPIO.output(18, GPIO.LOW)
+		GPIO.output(pin, GPIO.LOW)
 		return "GPIO PIN %d status changed" % pin
 	except Exception as exp:
 		write_log('%s' % exp)
