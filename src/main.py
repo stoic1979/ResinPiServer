@@ -36,19 +36,22 @@ def logs():
 
 @app.route('/gpio')
 def resin_gpio():
-	# GPIO pins list based on GPIO.BOARD
-	gpioList = [18]
-	GPIO.setup(gpioList, GPIO.OUT)
+	try:
+		# GPIO pins list based on GPIO.BOARD
+		gpioList = [18]
+		GPIO.setup(gpioList, GPIO.OUT)
 	
-	write_log("GPIO :: PIN 18 -> ON")
-	GPIO.output(gpioList, 1)
+		write_log("GPIO :: PIN 18 -> ON")
+		GPIO.output(gpioList, 1)
 
-	time.sleep(2)
+		time.sleep(2)
 
-	write_log("GPIO :: PIN 18 -> OFF")
-	GPIO.output(gpioList, 0)
-
-	return "GPIO PIN 18 status changed"	
+		write_log("GPIO :: PIN 18 -> OFF")
+		GPIO.output(gpioList, 0)
+		return "GPIO PIN 18 status changed"
+	except Exception as exp:
+		write_log('%s' % exp)
+		return 'resin_gpio() :: Got Exception: %s' % exp
 
 
 if __name__ == '__main__':
