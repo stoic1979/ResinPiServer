@@ -5,7 +5,8 @@ from flask import Flask
 app = Flask(__name__)
 
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
+
 LOG_FILE = "logs.txt"
 
 
@@ -41,17 +42,15 @@ def logs():
 def resin_gpio():
 	try:
 		# GPIO pins list based on GPIO.BOARD
-		gpioList = [18]
-		GPIO.setup(gpioList, GPIO.OUT)
-	
-		write_log("GPIO :: PIN 18 -> ON")
-		GPIO.output(gpioList, 1)
+		GPIO.setwarnings(False)
+		GPIO.setup(18, GPIO.OUT)
+		print "LED on"
 
-		time.sleep(2)
-
-		write_log("GPIO :: PIN 18 -> OFF")
-		GPIO.output(gpioList, 0)
-		return "GPIO PIN 18 status changed"
+		GPIO.output(18, GPIO.HIGH)
+		time.sleep(1)
+		print "LED off"
+		GPIO.output(18, GPIO.LOW)
+		return "GPIO PIN %d status changed" % pin
 	except Exception as exp:
 		write_log('%s' % exp)
 		return 'resin_gpio() :: Got Exception: %s' % exp
