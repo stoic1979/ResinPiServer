@@ -46,7 +46,9 @@ def resin_gpio():
 	time.sleep(2)
 
 	write_log("GPIO :: PIN 18 -> OFF")
-	GPIO.output(gpioList, 0)	
+	GPIO.output(gpioList, 0)
+
+	return "GPIO PIN 18 status changed"	
 
 
 if __name__ == '__main__':
