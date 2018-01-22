@@ -38,8 +38,8 @@ def logs():
 	return get_logs()
 
 
-@app.route('/gpio')
-def resin_gpio():
+@app.route('/gpio/<int:pin>')
+def resin_gpio(pin):
 	try:
 		# GPIO pins list based on GPIO.BOARD
 		GPIO.setwarnings(False)
