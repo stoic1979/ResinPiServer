@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import datetime
+import time
 from flask import Flask
 app = Flask(__name__)
 
