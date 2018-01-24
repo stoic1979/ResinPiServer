@@ -56,5 +56,22 @@ def resin_gpio(pin):
 		return 'resin_gpio() :: Got Exception: %s' % exp
 
 
+@app.route('/gpio_in')
+def resin_input():
+	try:
+		GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+		GPIO.setup(18, GPIO.OUT, initial=GPIO.LOW)
+		GPIO.add_event_detect(4, GPIO.BOTH)
+		return "GPIO input PIN %d" % pin
+	except Exception as exp:
+		write_log('%s' % exp)
+		return 'resin_input() :: Got exception: %s' % exp
+
+
+def my_callback():
+    GPIO.output(18, GPIO.input(4))
+GPIO.add_event_callback(4, my_callback)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
