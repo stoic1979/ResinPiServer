@@ -62,15 +62,15 @@ def resin_input():
 		GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 		GPIO.setup(18, GPIO.OUT, initial=GPIO.LOW)
 		GPIO.add_event_detect(4, GPIO.BOTH)
-		return "GPIO input PIN %d" % pin
+		return "GPIO input PIN"
 	except Exception as exp:
 		write_log('%s' % exp)
 		return 'resin_input() :: Got exception: %s' % exp
 
 
-# def my_callback():
-#     GPIO.output(18, GPIO.input(4))
-# GPIO.add_event_callback(4, my_callback)
+def my_callback():
+	GPIO.output(18, GPIO.input(4))
+GPIO.add_event_callback(4, my_callback)
 
 
 if __name__ == '__main__':
