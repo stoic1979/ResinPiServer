@@ -68,10 +68,10 @@ def resin_input():
 		return 'resin_input() :: Got exception: %s' % exp
 
 
-GPIO.add_event_callback(4, my_callback)
+# GPIO.add_event_callback(4, my_callback)
 
-def my_callback():
-	GPIO.output(18, GPIO.input(4))
+# def my_callback():
+# 	GPIO.output(18, GPIO.input(4))
 
 
 
